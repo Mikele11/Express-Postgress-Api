@@ -1,0 +1,592 @@
+{
+  "swagger": "2.0",
+  "info": {
+      "title": "Include Care API",
+      "description": "API",
+      "termsOfService": "",
+      "contact":{
+          "name": "include care",
+          "email": "",
+          "url": "http://localhost:3000"
+      },
+      "license": {
+          "name": "",
+          "url": ""
+      },
+      "version": "1.0.0"
+  },
+  "tags": [
+      {
+        "name": "Routes Group",
+        "description": "Autorization, User, Employers, Workers"
+      }
+  ],   
+  "paths": {
+      "/api/auth/register": {
+          "post": {
+              "tags": ["Autorization"],
+              "summary": "Create new user in database",
+              "requestBody": {
+                "description": "data for register",
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+              },
+              "produces": [
+                "application/json"
+              ],
+              "responses": {
+                "200": {
+                    "description": "OK",
+                    "schema": {
+                        "$ref": ""
+                    }
+                },
+                "400": {
+                    "description": "Failed. Bad post data."
+                }
+            }
+          }
+      },
+      "/api/auth/login": {
+        "post": {
+            "tags": ["Autorization"],
+            "summary": "Login user in site",
+            "requestBody": {
+              "description": "password and email",
+              "required": true,
+              "content": {
+                  "application/json": {
+                      "schema": {
+                        "type": "object",
+                        "properties": {
+                          "login": {
+                               "type": "string"
+                          },
+                          "password": {
+                                "type": "string"
+                          }
+                        }
+                      }
+                  }
+              }
+            },
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                  "description": "OK",
+                  "schema": {
+                      "$ref": ""
+                  }
+              },
+              "400": {
+                  "description": "Failed. Bad post data."
+              }
+          }
+        }
+      },
+      "/api/auth/saveresethash": {
+        "post": {
+            "tags": ["Autorization"],
+            "summary": "create hash and send to email",
+            "requestBody": {
+              "description": "email",
+              "required": true,
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": ""
+                      }
+                  }
+              }
+            },
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                  "description": "OK",
+                  "schema": {
+                      "$ref": ""
+                  }
+              },
+              "400": {
+                  "description": "Failed. Bad post data."
+              }
+          }
+        }
+      },
+      "/api/auth/confirm": {
+        "get": {
+          "tags": ["Autorization"],
+          "summary": "confirm unique token",
+          "parameters": [
+          ],
+          "responses": {
+            "200": {
+                "description": "OK",
+                "schema": {
+                    "$ref": ""
+                }
+            },
+            "400": {
+                "description": "Failed. Bad data."
+              }
+          }
+        }
+      },
+      "/api/user": {
+        "get": {
+            "tags": ["User"],
+            "summary": "get one user",
+            "parameters": [
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                  "description": "OK",
+                  "schema": {
+                      "$ref": "#/definitions/User"
+                  }
+              },
+              "400": {
+                  "description": "Failed. Bad post data."
+              }
+          }
+        },
+        "put": {
+          "tags": ["User"],
+          "summary": "update one user",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+                "description": "OK",
+                "schema": {
+                    "$ref": "#/definitions/User"
+                }
+            },
+            "400": {
+                "description": "Failed. Bad post data."
+            }
+          }
+        },
+        "delete": {
+          "tags": ["User"],
+          "summary": "update one user",
+          "parameters": [
+          ],
+          "responses": {
+            "200": {
+                "description": "OK",
+                "schema": {
+                    "$ref": "#/definitions/User"
+                }
+            },
+            "400": {
+                "description": "Failed. Bad post data."
+            }
+          }
+        }
+      },
+      "/api/employers/job": {
+        "post": {
+            "tags": ["Employers"],
+            "summary": "create new job",
+            "requestBody": {
+              "description": "create new job",
+              "required": true,
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": "#/definitions/Job"
+                      }
+                  }
+              }
+            },
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                  "description": "OK",
+                  "schema": {
+                      "$ref": "#/definitions/Job"
+                  }
+              },
+              "400": {
+                  "description": "Failed. Bad post data."
+              }
+          }
+        },
+        "put": {
+          "tags": ["Employers"],
+          "summary": "put job",
+          "requestBody": {
+            "description": "email",
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "#/definitions/Job"
+                    }
+                }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+                "description": "OK",
+                "schema": {
+                    "$ref": "#/definitions/Job"
+                }
+            },
+            "400": {
+                "description": "Failed. Bad post data."
+            }
+        }
+      }
+      },
+      "/api/employers/jobs/{page}/{perPage}": {
+        "get": {
+            "tags": ["Employers"],
+            "summary": "Get all my jobs",
+            "requestBody": {
+              "description": "email",
+              "required": true,
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": ""
+                      }
+                  }
+              }
+            },
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                  "description": "OK",
+                  "schema": {
+                      "$ref": ""
+                  }
+              },
+              "400": {
+                  "description": "Failed. Bad post data."
+              }
+          }
+        }
+      },
+      "/api/employers/respondedlist/{id}/{page}/{perPage}": {
+        "get": {
+            "tags": ["Employers"],
+            "summary": "Get all workers",
+            "requestBody": {
+              "description": "email",
+              "required": true,
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": ""
+                      }
+                  }
+              }
+            },
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                  "description": "OK",
+                  "schema": {
+                      "$ref": ""
+                  }
+              },
+              "400": {
+                  "description": "Failed. Bad post data."
+              }
+          }
+        }
+      },
+      "/api/employers/messages": {
+        "get": {
+            "tags": ["Employers"],
+            "summary": "Get all my messages",
+            "parameters": [
+              {
+              }
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                  "description": "OK",
+                  "schema": {
+                      "$ref": ""
+                  }
+              },
+              "400": {
+                  "description": "Failed. Bad post data."
+              }
+          }
+        },
+        "post": {
+          "tags": ["Employers"],
+          "summary": "send message",
+          "requestBody": {
+            "description": "send message",
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "#/definitions/Job"
+                    }
+                }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+                "description": "OK",
+                "schema": {
+                    "$ref": "#/definitions/Job"
+                }
+            },
+            "400": {
+                "description": "Failed. Bad post data."
+            }
+        }
+        }
+      },
+      "/api/workers/uploadphoto": {
+        "post": {
+            "tags": ["Workers"],
+            "summary": "Send photo",
+            "requestBody": {
+              "description": "email",
+              "required": true,
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": ""
+                      }
+                  }
+              }
+            },
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                  "description": "OK",
+                  "schema": {
+                      "$ref": ""
+                  }
+              },
+              "400": {
+                  "description": "Failed. Bad post data."
+              }
+          }
+        }
+      },
+      "/api/workers/joblist/{page}/{perPage}": {
+        "get": {
+            "tags": ["Workers"],
+            "summary": "Get all jobs",
+            "requestBody": {
+              "description": "email",
+              "required": true,
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": ""
+                      }
+                  }
+              }
+            },
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                  "description": "OK",
+                  "schema": {
+                      "$ref": ""
+                  }
+              },
+              "400": {
+                  "description": "Failed. Bad post data."
+              }
+          }
+        }
+      },
+      "/api/workers/onejob/{id}": {
+        "get": {
+            "tags": ["Workers"],
+            "summary": "Get one jobs",
+            "parameters": [
+              {
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "description": "The id for one job",
+                "type": "string"
+              }
+            ],
+            "responses": {
+              "200": {
+                  "description": "OK",
+                  "schema": {
+                      "services": "array",
+                      "title": "string",
+                      "describe": "string",
+                      "user_id": "id"
+                  }
+              },
+              "400": {
+                  "description": "Failed. Bad post data."
+              }
+          }
+        }
+      },
+      "/api/workers/applyjob/{id}": {
+        "зщие": {
+            "tags": ["Workers"],
+            "summary": "Apply job",
+            "responses": {
+              "200": {
+                  "description": "OK",
+                  "schema": {
+                      "services": "array",
+                      "title": "string",
+                      "describe": "string",
+                      "user_id": "id"
+                  }
+              },
+              "400": {
+                  "description": "Failed. Bad post data."
+              }
+          }
+        }
+      },
+      "/api/workers/message/{id}": {
+        "post": {
+            "tags": ["Workers"],
+            "summary": "Send message",
+            "requestBody": {
+              "description": "email",
+              "required": true,
+              "content": {
+                  "application/json": {
+                      "schema": {
+                          "$ref": ""
+                      }
+                  }
+              }
+            },
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                  "description": "OK",
+                  "schema": {
+                      "$ref": ""
+                  }
+              },
+              "400": {
+                  "description": "Failed. Bad post data."
+              }
+          }
+        }
+      }
+  },
+  "definitions": {
+    "id": {
+        "properties": {
+            "uuid": {
+                "type": "string"
+            }
+        }
+    },
+    "User": {
+        "type": "object",
+        "properties": {
+            "firstName": {
+                "type": "string"
+            },
+            "lastName": {
+                "type": "string"
+            },
+            "email": {
+                "type": "string"
+            },
+            "phone": {
+                "type": "string"
+            },
+            "password": {
+              "type": "string"
+            },
+            "passwordReset": {
+              "type": "string"
+            },
+            "messages": {
+              "type": "array"
+            },
+            "jobs": {
+              "type": "array"
+            },
+            "describeWorker": {
+              "type": "string"
+            },
+            "county": {
+              "type": "string"
+            },
+            "serviceWorker": {
+              "type": "array"
+            },
+            "avatar": {
+              "type": "object"
+            },
+            "role": {
+              "type": "string"
+            }
+        }
+    },
+    "Job": {
+      "type": "object",
+      "properties": {
+        "services": {
+          "type": "array"
+        },
+        "title": {
+          "type": "string"
+        },
+        "describe": {
+          "type": "string"
+        },
+        "user_id": {
+          "ref": "#/definitions/id"
+        }
+      }
+    }
+  }
+}  
