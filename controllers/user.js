@@ -1,68 +1,78 @@
-const Pool = require('pg').Pool
-const pool = new Pool({
-  user: 'me',
-  host: 'localhost',
-  database: 'api',
-  password: 'password',
-  port: 5432,
-})
+const User = require('../models').User
 
-const getUsers = (request, response) => {
-  pool.query('SELECT * FROM users ORDER BY id ASC', (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(200).json(results.rows)
-  })
+const getUsers = (req, res) => {
+  return User
+    .findAll({})
+    .then(users => res.status(200).send(users))
+    .catch(error => res.status(400).send(error));
 }
 
-const getUserById = (request, response) => {
-  const id = parseInt(request.params.id)
-
-  pool.query('SELECT * FROM users WHERE id = $1', [id], (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(200).json(results.rows)
-  })
-}
-
-const createUser = (request, response) => {
-  const { name, email } = request.body
-
-  pool.query('INSERT INTO users (name, email) VALUES ($1, $2)', [name, email], (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(201).send(`User added with ID: ${results.rows[0]}${results.id}`)
-  })
-}
-
-const updateUser = (request, response) => {
-  const id = parseInt(request.params.id)
-  const { name, email } = request.body
-
-  pool.query(
-    'UPDATE users SET name = $1, email = $2 WHERE id = $3',
-    [name, email, id],
-    (error, results) => {
-      if (error) {
-        throw error
+const getUserById = (req, res) => {
+  return User
+    .findById(req.params.id, {})
+    .then(user => {
+      if (!user) {
+        return res.status(404).send({
+          message: 'User Not Found',
+        });
       }
-      response.status(200).send(`User modified with ID: ${id}`)
-    }
-  )
+      return res.status(200).send(user);
+    })
+    .catch(error => res.status(400).send(error));
 }
 
-const deleteUser = (request, response) => {
-  const id = parseInt(request.params.id)
+const createUser = (req, res) => {
+  return User
+    .create({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      phone: req.body.phone,
+      password: req.body.password,
+      email: req.body.email,
+    })
+    .then(user => res.status(201).send(user))
+    .catch(error => res.status(400).send(error));
+}
 
-  pool.query('DELETE FROM users WHERE id = $1', [id], (error, results) => {
-    if (error) {
-      throw error
-    }
-    response.status(200).send(`User deleted with ID: ${id}`)
-  })
+const updateUser = (req, res) => {
+  return User
+    .findById(req.params.id, {})
+    .then(user => {
+      if (!user) {
+        return res.status(404).send({
+          message: 'User Not Found',
+        });
+      }
+      return user
+        .update({
+          title: req.body.title || user.title,
+          firstName: req.body.firstName || user.firstName,
+          lastName: req.body.lastName || user.lastName,
+          phone: req.body.phone || user.phone,
+          password: req.body.password || user.password,
+          email: req.body.email || user.email,
+        })
+        .then(() => res.status(200).send(user))  // Send back the updated todo.
+        .catch((error) => res.status(400).send(error));
+    })
+    .catch((error) => res.status(400).send(error));
+}
+
+const deleteUser = (req, res) => {
+  return User
+    .findById(req.params.id)
+    .then(user => {
+      if (!user) {
+        return res.status(400).send({
+          message: 'User Not Found',
+        });
+      }
+      return user
+        .destroy()
+        .then(() => res.status(204).send())
+        .catch(error => res.status(400).send(error));
+    })
+    .catch(error => res.status(400).send(error));
 }
 
 module.exports = {
