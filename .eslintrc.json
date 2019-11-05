@@ -1,0 +1,49 @@
+{
+    "env": {
+        "node": true,
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "mongo": true,
+        "mocha": true
+    },
+    "root": true,
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "rules": {
+        "no-cond-assign": ["error", "always"],
+        "no-dupe-args": "error",
+        "no-dupe-keys": "error",
+        "no-ex-assign": "error",
+        "eqeqeq": ["error", "always"],
+        "indent": [
+            "error",
+            "tab"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ],
+        "no-confusing-arrow": "error",
+        "no-useless-constructor": "error",
+        "no-alert": "error",
+        "no-empty-function": "error",
+        "no-empty": "error",
+        "no-const-assign": "error",
+        "prefer-const": "error",
+        "no-duplicate-imports": "error"
+    }
+}
