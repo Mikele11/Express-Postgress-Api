@@ -1,15 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
-	const User = sequelize.define('User', {
-		id: {
+	const Customer = sequelize.define('Customer', {
+		Id: {
 			autoIncrement: true,
 			primaryKey: true,
-			type: DataTypes.INTEGER
+			type: DataTypes.INTEGER,
+			allowNull: false,
 		},
 		firstName: DataTypes.STRING,
 		lastName: DataTypes.STRING,
 		phone: DataTypes.STRING,
 		password: DataTypes.STRING,
-		email: DataTypes.STRING,
+		email: {
+			type: DataTypes.STRING,
+			isEmail: true
+		},
 		createdAt: {
 			allowNull: false,
 			type: DataTypes.DATE
@@ -20,5 +24,9 @@ module.exports = (sequelize, DataTypes) => {
 		},
 	});
 
-	return User;
+	Customer.associate = models => {
+		Customer.hasMany(models.Message, { as: 'Posts', onDelete: 'cascade', hooks: true, foreignKey: 'user_id' });
+	};
+
+	return Customer;
 };

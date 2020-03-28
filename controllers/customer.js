@@ -1,15 +1,21 @@
-const User = require('../models').User;
+const Customer = require('../models').Customer;
+const Message = require('../models').Message;
 
 const getUsers = (req, res) => {
-	return User
-		.findAll({})
+	return Customer
+		.findAll({
+			include: [				{
+				model: Message,
+				as: 'Posts',
+			}]
+		})
 		.then(users => res.status(200).send(users))
 		.catch(error => res.status(400).send(error));
 };
 
 const getUserById = (req, res) => {
-	return User
-		.findById(req.params.id, {})
+	return Customer
+		.findOne({ where: { id: req.params.id } })
 		.then(user => {
 			if (!user) {
 				return res.status(404).send({
@@ -22,7 +28,7 @@ const getUserById = (req, res) => {
 };
 
 const createUser = (req, res) => {
-	return User
+	return Customer
 		.create({
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,
@@ -35,8 +41,8 @@ const createUser = (req, res) => {
 };
 
 const updateUser = (req, res) => {
-	return User
-		.findById(req.params.id, {})
+	return Customer
+		.findOne({ where: { id: req.params.id } })
 		.then(user => {
 			if (!user) {
 				return res.status(404).send({
@@ -58,21 +64,12 @@ const updateUser = (req, res) => {
 		.catch((error) => res.status(400).send(error));
 };
 
-const deleteUser = (req, res) => {
-	return User
-		.findById(req.params.id)
-		.then(user => {
-			if (!user) {
-				return res.status(400).send({
-					message: 'User Not Found',
-				});
-			}
-			return user
-				.destroy()
-				.then(() => res.status(204).send())
-				.catch(error => res.status(400).send(error));
-		})
-		.catch(error => res.status(400).send(error));
+const deleteUser = async(req, res) => {
+	const user = await Customer.destroy({ where: { id: req.params.id } });
+	res.status(200).send({
+		success: true,
+		user: user
+	});
 };
 
 module.exports = {

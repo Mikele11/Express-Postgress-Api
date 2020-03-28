@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 require('dotenv').config();
 
-const user = require('./routes/user');
+const customer = require('./routes/customer');
+const message = require('./routes/message');
 
 const app = express();
 app.use(helmet());
@@ -34,7 +35,8 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use('/api/user', user);
+app.use('/api/customer', customer);
+app.use('/api/message', message);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

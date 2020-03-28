@@ -2,9 +2,10 @@ const debug = require('debug')('mean-app:server');
 const http = require('http');
 const app = require('../app');
 
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3200');
 app.set('port', port);
 
+console.log('listening port',port);
 const server = http.createServer(app);
 
 server.listen(port);

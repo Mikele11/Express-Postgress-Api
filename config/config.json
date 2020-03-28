@@ -1,11 +1,19 @@
 {
   "development": {
-    "username": "admin",
-    "password": "password",
-    "database": "node_hero",
+    "username": "root",
+    "password": "",
+    "database": "kordis",
     "host": "127.0.0.1",
-    "port": 5432,
-    "dialect": "postgres"
+    "port": 3306,
+    "dialect": "mysql",
+    "pool":{
+			"max": 100000, 
+			"min": 0,
+			"idle": 100000 ,
+			"acquire": 9000000,
+			"evict": 40000000             
+		},
+		"logging": false
   },
   "test": {
     "username": "admin",
